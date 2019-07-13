@@ -2,6 +2,7 @@ package com.chryl;
 
 import com.chryl.bean.SsoUser;
 import com.chryl.utils.GsonUtil;
+import com.chryl.utils.RedisUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ChrRedisApplicationTests {
+
+    @Autowired
+    private RedisUtil redisUtil;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -65,6 +69,26 @@ public class ChrRedisApplicationTests {
         System.out.println("--");
         System.out.println(su.getUserId());
         System.out.println(su.getUserName());
+    }
+
+    /**
+     * 一下为测试RedisTemplate
+     */
+    @Test
+    public void testRT1() {
+        String key = "####123455sr4g2";
+        SsoUser ssoUser = new SsoUser();
+        ssoUser.setUserId(key);
+        ssoUser.setUserName("chryl");
+        ssoUser.setExpireMinite(1440);
+        ssoUser.setExpireFreshTime(System.currentTimeMillis());
+        redisTemplate.opsForValue().set(ssoUser.getUserId(), ssoUser, 1440, TimeUnit.MINUTES);
+    }
+
+
+    @Test
+    public void testRT00() {
+
     }
 
 }
