@@ -88,7 +88,9 @@ public class ChrRedisApplicationTests {
 
     @Test
     public void testRT00() {
-
+        String key = "####123455sr4g2";
+        Long expire = redisTemplate.getExpire(key);
+        System.out.println(expire);
     }
 
 }
